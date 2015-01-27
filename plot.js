@@ -6,13 +6,12 @@ _ = require('underscore');
 
 initialBpm = v0 = 90;
 finalBpm = v1 = 135;
-durationInBeatsAtInitialTempo = 90;
+durationInBeatsAtInitialTempo = 64;
 durationInMinutes = t = durationInBeatsAtInitialTempo / initialBpm;
-beatsInChangingTempo = b1 = p1 = 120;
+beatsInChangingTempo = b1 = p1 = 76;
 
 initialAcceleration = a0 = ((6 * b1) - (2 * t) * (v1 + (2 * v0))) / (t * t);
 finalAcceleration = a1 = (v0 - v1 + (initialAcceleration * t)) * (-2/(t * t));
-
 
 resolution = 100;
 time = _(_.range(resolution + 1)).map(function(val){return val / resolution * durationInMinutes});
