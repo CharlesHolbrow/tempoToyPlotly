@@ -26,19 +26,52 @@ bpm = _(time).map(function(t){
 var plotly = require('plotly')('cholbrow', apiKey);
 var data = [
   {
-    x: time, 
-    y: beatsElapsed, 
-    type: "scatter"
+    x: time,
+    y: bpm,
+    type: "scatter",
+    name: "Tempo"
   },
   {
-    x:time,
-    y: bpm,
-    type: "scatter"
+    x: time,
+    y: beatsElapsed,
+    type: "scatter",
+    name: "Beats Elapsed",
+    yaxis: "y2"
   }
 ];
 
+var orange = "ff7f0e";
+var blue = "1f77b4";
+var layout = {
+  title: "Tempo Toy",
+  xaxis: {
+    title: "Time in Minutes",
+    zeroline: false
+  },
+  yaxis: {
+    title: "Beats Per Minute",
+    titlefont: {color: blue},
+    tickfont: {color: blue},
+    showline: true,
+    linecolor: blue,
+    side: 'right',
+  },
+  yaxis2: {
+    title: "Beats Elapsed",
+    titlefont: {color: orange},
+    tickfont: {color: orange},
+    overlaying:  'y',
+    side:'left',
+    showline: true,
+    linecolor: orange,
+  }
+};
 
-var graphOptions = {filename: "tempo toy", fileopt: "overwrite"};
+var graphOptions = {
+  filename: "tempo toy",
+  fileopt: "overwrite",
+  layout: layout
+};
 plotly.plot(data, graphOptions, function (err, msg) {
   console.log('err:', err);
   console.log(msg);
