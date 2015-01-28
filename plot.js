@@ -13,12 +13,17 @@ beatsInChangingTempo = b1 = p1 = 76;
 initialAcceleration = a0 = ((6 * b1) - (2 * t) * (v1 + (2 * v0))) / (t * t);
 finalAcceleration = a1 = (v0 - v1 + (initialAcceleration * t)) * (-2/(t * t));
 
+// resolution of our time
 resolution = 100;
+// array of times (in minutes) at which we will sample our curves
 time = _(_.range(resolution + 1)).map(function(val){return val / resolution * durationInMinutes});
+
+// array of how many beats have elapsed relative to time
 beatsElapsed = _(time).map(function(t){
   return 0 + (v0 * t) + (a0 * t * t)/2 + (a1 * t * t * t)/6;
 });
 
+// array of current tempo, sampled <resolution> times
 bpm = _(time).map(function(t){
   return v0 + (a0 * t) + (a1 * t * t)/2;
 });
@@ -75,6 +80,7 @@ var layout = {
   titlefont: {size: titleFontSize},
   xaxis: {
     title: "Static Tempo Beats (90 BPM)",
+    // zeroline on the xaxis is the vertical zero line
     zeroline: false,
     titlefont: {color: beatsColor, size: axisTitleFontSize},
     tickfont: {color: beatsColor, size: axisTickFontSize},
@@ -87,7 +93,11 @@ var layout = {
     linecolor: tempoColor,
     linewidth: axisLineWidth,
     side: 'left',
-    range: [-1, 138]
+    range: [-1, 138],
+    // zeroline on the y axis horizontal line
+    zeroline: true,
+    zerolinewidth: axisLineWidth,
+    zerolinecolor: black,
   },
   yaxis2: {
     title: "Beats Elapsed",
