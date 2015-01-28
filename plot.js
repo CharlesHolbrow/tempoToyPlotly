@@ -54,16 +54,18 @@ var layout = {
     tickfont: {color: blue},
     showline: true,
     linecolor: blue,
-    side: 'right',
+    side: 'left',
+    range: [0, 135]
   },
   yaxis2: {
     title: "Beats Elapsed",
     titlefont: {color: orange},
     tickfont: {color: orange},
     overlaying:  'y',
-    side:'left',
+    side:'right',
     showline: true,
     linecolor: orange,
+    range: [0, 135]
   }
 };
 
