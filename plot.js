@@ -52,7 +52,7 @@ var data = [
       color:tempoColor,
       width:2,
       shape:"linear",
-      dash:"solid" // solid, dash, dot, longdash, dashdot, longdashdot
+      dash:"dash" // solid, dash, dot, longdash, dashdot, longdashdot
     }
   },
   {
@@ -72,6 +72,7 @@ var data = [
 
 var layout = {
   title: "Tempo Toy",
+  titlefont: {size: titleFontSize},
   xaxis: {
     title: "Static Tempo Beats (90 BPM)",
     zeroline: false,
