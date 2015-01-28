@@ -23,49 +23,81 @@ bpm = _(time).map(function(t){
   return v0 + (a0 * t) + (a1 * t * t)/2;
 });
 
+staticBeats = _(time).map(function(t){
+  return initialBpm * t;
+});
+
+var blue = "1f77b4";
+var orange = "ff7f0e";
+
+var lightGrey = "bfbfbf";
+var grey = "808080";
+var black = "000000";
+var titleFontSize = 22
+var axisLineWidth = 2;
+var tempoColor = black;
+var beatsColor = grey;
+var axisTitleFontSize = 18;
+var axisTickFontSize = 16;
+
+
 var plotly = require('plotly')('cholbrow', apiKey);
 var data = [
   {
-    x: time,
+    x: staticBeats,
     y: bpm,
     type: "scatter",
-    name: "Tempo"
+    name: "Tempo",
+    line:{
+      color:tempoColor,
+      width:2,
+      shape:"linear",
+      dash:"solid" // solid, dash, dot, longdash, dashdot, longdashdot
+    }
   },
   {
-    x: time,
+    x: staticBeats,
     y: beatsElapsed,
     type: "scatter",
     name: "Beats Elapsed",
-    yaxis: "y2"
+    yaxis: "y2",
+    line:{
+      color:beatsColor,
+      width:3,
+      shape:"linear",
+      dash:"solid"
+    }
   }
 ];
 
-var orange = "ff7f0e";
-var blue = "1f77b4";
 var layout = {
   title: "Tempo Toy",
   xaxis: {
-    title: "Time in Minutes",
-    zeroline: false
+    title: "Static Tempo Beats (90 BPM)",
+    zeroline: false,
+    titlefont: {color: beatsColor, size: axisTitleFontSize},
+    tickfont: {color: beatsColor, size: axisTickFontSize},
   },
   yaxis: {
     title: "Beats Per Minute",
-    titlefont: {color: blue},
-    tickfont: {color: blue},
+    titlefont: {color: tempoColor, size: axisTitleFontSize},
+    tickfont: {color: tempoColor, size: axisTickFontSize},
     showline: true,
-    linecolor: blue,
+    linecolor: tempoColor,
+    linewidth: axisLineWidth,
     side: 'left',
-    range: [0, 135]
+    range: [-1, 138]
   },
   yaxis2: {
     title: "Beats Elapsed",
-    titlefont: {color: orange},
-    tickfont: {color: orange},
+    titlefont: {color: beatsColor, size: axisTitleFontSize},
+    tickfont: {color: beatsColor, size: axisTickFontSize},
     overlaying:  'y',
     side:'right',
     showline: true,
-    linecolor: orange,
-    range: [0, 135]
+    linecolor: beatsColor,
+    linewidth: axisLineWidth,
+    range: [-1, 138]
   }
 };
 
