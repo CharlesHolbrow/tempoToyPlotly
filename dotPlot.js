@@ -5,10 +5,10 @@ if (!apiKey) throw new Error('pass api key as command line argument');
 _ = require('underscore');
 
 initialBpm = v0 = 90;
-finalBpm = v1 = 135;
-durationInBeatsAtInitialTempo = 64;
+finalBpm = v1 = 120;
+durationInBeatsAtInitialTempo = 16;
 durationInMinutes = t = durationInBeatsAtInitialTempo / initialBpm;
-beatsInChangingTempo = b1 = p1 = 76;
+beatsInChangingTempo = b1 = p1 = 20;
 
 initialAcceleration = a0 = ((6 * b1) - (2 * t) * (v1 + (2 * v0))) / (t * t);
 finalAcceleration = a1 = (v0 - v1 + (initialAcceleration * t)) * (-2/(t * t));
@@ -43,7 +43,20 @@ _(beatsElapsed).each(function(val, index){
   firstBeats[beat] = [t, val];
 });
 
-changingBeatsRelativeToStaticBeats = _(firstBeats).map(function(val){return val[0] * initialBpm});
+var changingBeatsRelativeToStaticBeats = _(firstBeats).map(function(val){return val[0] * initialBpm});
+
+// prepend a fake measure of 4/4
+var pre = [-4, -2, -3, -1];
+var changingBeatsRelativeToStaticBeats = pre.concat(changingBeatsRelativeToStaticBeats);
+var staticBeatsDisplayData = pre.concat(_.range(durationInBeatsAtInitialTempo + 1));
+// Append a fake measure
+var end = staticBeatsDisplayData[staticBeatsDisplayData.length - 1]
+var post = [end+1,end+2,end+3,end+4];
+staticBeatsDisplayData = staticBeatsDisplayData.concat(post);
+var oneBeatRealtiveToStatic = aBeat = initialBpm / finalBpm;
+post = [end + aBeat * 1, end + aBeat * 2, end + aBeat * 3, end + aBeat * 4];
+changingBeatsRelativeToStaticBeats = changingBeatsRelativeToStaticBeats.concat(post);
+
 
 var blue = "1f77b4";
 var orange = "ff7f0e";
@@ -57,6 +70,9 @@ var tempoColor = black;
 var beatsColor = grey;
 var axisTitleFontSize = 18;
 var axisTickFontSize = 16;
+var layoutMarginTopBottom = 80;
+var layoutMarginLeftRight = 10;
+
 
 
 var plotly = require('plotly')('cholbrow', apiKey);
@@ -73,7 +89,7 @@ var data = [
     }
   },
   {
-    x: _.range(durationInBeatsAtInitialTempo + 1),
+    x: staticBeatsDisplayData,
     y: _(changingBeatsRelativeToStaticBeats).map(function(){return 0}),
     type: "scatter",
     name: "Static Beats",
@@ -85,17 +101,31 @@ var data = [
   }
 ];
 
+var chartTitle = initialBpm + " BPM to " + finalBpm + " BPM over " +
+  beatsInChangingTempo + ":" + durationInBeatsAtInitialTempo + " Beats";
+
 var layout = {
-  title: "Beat Chart - Changing Tempo Over Static Tempo",
+  title: chartTitle,
   titlefont: {size: titleFontSize},
+  width: 700,
+  height: 200,
+  margin: {b:layoutMarginTopBottom, t:layoutMarginTopBottom, l:layoutMarginLeftRight, r:layoutMarginLeftRight},
   xaxis: {
-    title: "Static Tempo Beats (90 BPM)",
+
+    title: "Static Tempo Beats (" + initialBpm + " BPM)",
     // zeroline on the xaxis is the vertical zero line
-    zeroline: true,
-    titlefont: {color: beatsColor, size: axisTitleFontSize},
+    zeroline: false,
+    showline: false,
+    // titlefont: {color: beatsColor, size: axisTitleFontSize},
     tickfont: {color: beatsColor, size: axisTickFontSize},
+    autotick: false,
+    tick0: -4,
+    dtick: 4,
   },
   yaxis: {
+    autotick: false,
+    tick0: -3,
+    dtick: 10,
     title: "",
     titlefont: {color: tempoColor, size: axisTitleFontSize},
     tickfont: {color: tempoColor, size: axisTickFontSize},
@@ -103,7 +133,8 @@ var layout = {
     linecolor: tempoColor,
     linewidth: axisLineWidth,
     side: 'left',
-    range: [-2, 3],
+    range: [-1, 2],
+    showticks: false,
     // zeroline on the y axis horizontal line
     zeroline: false,
     zerolinewidth: axisLineWidth,
