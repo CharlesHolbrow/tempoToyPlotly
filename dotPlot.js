@@ -140,6 +140,34 @@ var layout = {
     zerolinewidth: axisLineWidth,
     zerolinecolor: black,
   },
+  annotations: [
+    {
+      x: 0,
+      y: 1,
+      xref: "x",
+      yref: "y",
+      text: "Begin Tempo Change",
+      showarrow: true,
+      arrowhead: 2,
+      arrowsize: 1,
+      arrowwidth: 2,
+      ax: 0,
+      ay: -3
+    },
+    {
+      x: end,
+      y: 1,
+      xref: "x",
+      yref: "y",
+      text: "Arrive at " + finalBpm + " BPM after exactly " + beatsInChangingTempo + " beats",
+      showarrow: true,
+      arrowhead: 2,
+      arrowsize: 1,
+      arrowwidth: 2,
+      ax: 0,
+      ay: -32
+    }
+  ]
 };
 
 var graphOptions = {
