@@ -105,14 +105,14 @@ var chartTitle = initialBpm + " BPM to " + finalBpm + " BPM over " +
   beatsInChangingTempo + ":" + durationInBeatsAtInitialTempo + " Beats";
 
 var layout = {
-  title: chartTitle,
+  // title: chartTitle,
   titlefont: {size: titleFontSize},
   width: 700,
   height: 200,
   margin: {b:layoutMarginTopBottom, t:layoutMarginTopBottom, l:layoutMarginLeftRight, r:layoutMarginLeftRight},
   xaxis: {
 
-    title: "Static Tempo Beats (" + initialBpm + " BPM)",
+    title: "Time, Measured in Beats at " + initialBpm + " BPM",
     // zeroline on the xaxis is the vertical zero line
     zeroline: false,
     showline: false,
@@ -146,13 +146,13 @@ var layout = {
       y: 1,
       xref: "x",
       yref: "y",
-      text: "Begin Tempo Change",
+      text: "Begin Tempo Ramp",
       showarrow: true,
       arrowhead: 2,
       arrowsize: 1,
       arrowwidth: 2,
       ax: 0,
-      ay: -3
+      ay: -32
     },
     {
       x: end,

@@ -76,10 +76,10 @@ var data = [
 ];
 
 var layout = {
-  title: "Tempo Toy",
+  // title: "Tempo Toy",
   titlefont: {size: titleFontSize},
   xaxis: {
-    title: "Static Tempo Beats (90 BPM)",
+    title: "Time, Measured in Beats at " + initialBpm + " BPM",
     // zeroline on the xaxis is the vertical zero line
     zeroline: false,
     titlefont: {color: beatsColor, size: axisTitleFontSize},
