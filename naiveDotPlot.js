@@ -141,7 +141,7 @@ var layout = {
 };
 
 var graphOptions = {
-  filename: "tempo toy linear acceleration",
+  filename: "naive-polytempic-example",
   fileopt: "overwrite",
   layout: layout
 };
